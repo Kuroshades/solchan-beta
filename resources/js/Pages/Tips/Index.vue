@@ -80,7 +80,7 @@ const abbreviate_wallet = (wallet) => {
                             <td
                                 class="py-3 px-4 text-sm text-gray-600 dark:text-gray-300"
                             >
-                                {{ tip.rank }}
+                                {{ tips.from + index }}
                             </td>
                             <td
                                 v-if="
