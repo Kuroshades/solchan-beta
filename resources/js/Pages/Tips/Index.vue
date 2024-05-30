@@ -20,10 +20,10 @@ onMounted(() => {
 
 const abbreviate_wallet = (wallet) => {
     if (wallet.endsWith(".sol")) {
+        return wallet;
+    } else {
         // first 4 letter ... last 4 letter
         return wallet.slice(0, 4) + "..." + wallet.slice(-4);
-    } else {
-        return wallet;
     }
 };
 </script>
@@ -45,76 +45,77 @@ const abbreviate_wallet = (wallet) => {
                     See who's tipping the most on Solchan.
                 </p>
             </div>
-
-            <table
-                class="w-full mt-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg"
-            >
-                <thead>
-                    <tr>
-                        <th
-                            class="py-3 px-4 bg-gray-100 dark:bg-gray-700 text-left text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase"
-                        >
-                            Rank
-                        </th>
-                        <th
-                            class="py-3 px-4 bg-gray-100 dark:bg-gray-700 text-left text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase"
-                        >
-                            Name
-                        </th>
-                        <th
-                            class="py-3 px-4 bg-gray-100 dark:bg-gray-700 text-left text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase"
-                        >
-                            Total Tips
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr
-                        v-for="(tip, index) in tips.data"
-                        :key="tip.id"
-                        class="border-b border-gray-200 dark:border-gray-700"
-                    >
-                        <td
-                            class="py-3 px-4 text-sm text-gray-600 dark:text-gray-300"
-                        >
-                            {{ index + 1 }}
-                        </td>
-                        <td
-                            v-if="
-                                abbreviate_wallet(tip.tipper_name) ===
-                                tip.tipper_name
-                            "
-                            class="py-3 px-4 text-sm text-gray-600 dark:text-gray-300"
-                        >
-                            <a
-                                :href="`https://solscan.io/account/{tip.tipper_name}`"
+            <div class="flex overflow-x-auto flex-col items-center space-y-4">
+                <table
+                    class="w-full mt-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg"
+                >
+                    <thead>
+                        <tr>
+                            <th
+                                class="py-3 px-4 bg-gray-100 dark:bg-gray-700 text-left text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase"
                             >
-                                {{ abbreviate_wallet(tip.tipper_name) }}
-                            </a>
-                        </td>
-                        <td
-                            v-else
-                            class="py-3 px-4 text-sm text-gray-600 dark:text-gray-300"
+                                Rank
+                            </th>
+                            <th
+                                class="py-3 px-4 bg-gray-100 dark:bg-gray-700 text-left text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase"
+                            >
+                                Name
+                            </th>
+                            <th
+                                class="py-3 px-4 bg-gray-100 dark:bg-gray-700 text-left text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase"
+                            >
+                                Total Tips
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            v-for="(tip, index) in tips.data"
+                            :key="tip.id"
+                            class="border-b border-gray-200 dark:border-gray-700"
                         >
-                            {{ tip.tipper_name }}
-                        </td>
-                        <td
-                            class="py-3 px-4 text-sm text-gray-600 dark:text-gray-300"
-                        >
-                            {{ tip.total_amount }} (${{
-                                tip.total_amount * price
-                            }})
-                        </td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="3">
-                            <Pagination :links="tips.links" />
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
+                            <td
+                                class="py-3 px-4 text-sm text-gray-600 dark:text-gray-300"
+                            >
+                                {{ index + 1 }}
+                            </td>
+                            <td
+                                v-if="
+                                    abbreviate_wallet(tip.tipper_name) ===
+                                    tip.tipper_name
+                                "
+                                class="py-3 px-4 text-sm text-gray-600 dark:text-gray-300"
+                            >
+                                {{ tip.tipper_name }}
+                            </td>
+                            <td
+                                v-else
+                                class="py-3 px-4 text-sm text-gray-600 dark:text-gray-300"
+                            >
+                                <a
+                                    :href="`https://solscan.io/account/${tip.tipper_name}`"
+                                >
+                                    {{ abbreviate_wallet(tip.tipper_name) }}
+                                </a>
+                            </td>
+                            <td
+                                class="py-3 px-4 text-sm text-gray-600 dark:text-gray-300"
+                            >
+                                {{ tip.total_amount }} (${{
+                                    tip.total_amount * price
+                                }})
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">
+                                <Pagination :links="tips.links" />
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
     </div>
 </template>
