@@ -50,4 +50,9 @@ class Post extends Model
     {
         return $this->hasMany(Tip::class, 'tipper_id');
     }
+
+    public function replies()
+    {
+        return $this->hasMany(Post::class, 'parent', 'id');
+    }
 }
