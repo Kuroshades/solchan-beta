@@ -78,12 +78,18 @@ onMounted(() => {
                         <td
                             class="py-3 px-4 text-sm text-gray-600 dark:text-gray-300"
                         >
-                            {{ tip.total_amount }} (${{ tip.total_amount * price }})
+                            {{ tip.total_amount }} (${{
+                                tip.total_amount * price
+                            }})
                         </td>
                     </tr>
                 </tbody>
                 <tfoot>
-                    <Pagination :links="tips.links" />
+                    <tr>
+                        <td colspan="3">
+                            <Pagination :links="tips.links" />
+                        </td>
+                    </tr>
                 </tfoot>
             </table>
         </div>
