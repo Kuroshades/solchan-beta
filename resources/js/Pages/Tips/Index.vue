@@ -45,24 +45,24 @@ const abbreviate_wallet = (wallet) => {
                     See who's tipping the most on Solchan.
                 </p>
             </div>
-            <div class="flex overflow-x-auto flex-col items-center space-y-4">
+            <div class="overflow-x-auto max-w-7xl mx-auto lg:p-8">
                 <table
                     class="w-full mt-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg"
                 >
                     <thead>
                         <tr>
                             <th
-                                class="py-3 px-4 bg-gray-100 dark:bg-gray-700 text-left text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase"
+                                class="text-center py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase"
                             >
                                 Rank
                             </th>
                             <th
-                                class="py-3 px-4 bg-gray-100 dark:bg-gray-700 text-left text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase"
+                                class="text-center py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase"
                             >
                                 Name
                             </th>
                             <th
-                                class="py-3 px-4 bg-gray-100 dark:bg-gray-700 text-left text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase"
+                                class="text-center py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase"
                             >
                                 Total Tips
                             </th>
@@ -93,7 +93,9 @@ const abbreviate_wallet = (wallet) => {
                                 class="py-3 px-4 text-sm text-gray-600 dark:text-gray-300"
                             >
                                 <a
+                                    :title="tip.tipper_name"
                                     :href="`https://solscan.io/account/${tip.tipper_name}`"
+                                    target="_blank"
                                 >
                                     {{ abbreviate_wallet(tip.tipper_name) }}
                                 </a>
