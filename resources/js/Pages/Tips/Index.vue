@@ -2,6 +2,7 @@
 import { Head, Link } from "@inertiajs/vue3";
 import Pagination from "../../Components/Pagination.vue";
 import { onMounted } from "vue";
+import { ref } from "vue";
 
 const props = defineProps({
     tips: {
@@ -9,10 +10,12 @@ const props = defineProps({
         required: true,
     },
     price: {
-        type: Number,
+        type: String,
         required: true,
     },
 });
+
+const ref_price = ref(parseFloat(props.price));
 
 onMounted(() => {
     console.log(props.tips);
@@ -103,8 +106,11 @@ const abbreviate_wallet = (wallet) => {
                             <td
                                 class="py-3 px-4 text-sm text-gray-600 dark:text-gray-300"
                             >
-                                {{ tip.total_amount }} (${{
-                                    tip.total_amount * price
+                                {{
+                                    Intl.NumberFormat().format(tip.total_amount)
+                                }}
+                                (${{
+                                    (tip.total_amount * ref_price).toFixed(2)
                                 }})
                             </td>
                         </tr>
