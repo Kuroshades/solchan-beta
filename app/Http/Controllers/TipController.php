@@ -14,13 +14,14 @@ class TipController extends Controller
      */
     public function index()
     {
-        // group tips by tipper_name and sum their amount and return the result sorted by descending amount
-        $tips = Tip::selectRaw('tipper_name, sum(amount) as total_amount')
+        // group tips by tipper_name, calculate total amount, add rank, and return the result sorted by descending amount
+        $tips = Tip::selectRaw('tipper_name, SUM(amount) as total_amount, ROW_NUMBER() OVER (ORDER BY SUM(amount) DESC) as rank')
             ->groupBy('tipper_name')
             ->orderBy('total_amount', 'desc')
             ->paginate(10);
+    
         $price = Price::orderBy('timestamp', 'desc')->first()->price;
-
+    
         return Inertia::render('Tips/Index', [
             'tips' => $tips,
             'price' => $price,
