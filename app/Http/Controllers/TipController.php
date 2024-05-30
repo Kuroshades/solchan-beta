@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Price;
+use App\Models\Tip;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class TipController extends Controller
 {
@@ -11,7 +14,17 @@ class TipController extends Controller
      */
     public function index()
     {
-        //
+        // group tips by tipper_name and sum their amount and return the result sorted by descending amount
+        $tips = Tip::selectRaw('tipper_name, sum(amount) as total_amount')
+            ->groupBy('tipper_name')
+            ->orderBy('total_amount', 'desc')
+            ->paginate(10);
+        $price = Price::orderBy('timestamp', 'desc')->first()->price;
+
+        return Inertia::render('Tips/Index', [
+            'tips' => $tips,
+            'price' => $price,
+        ]);
     }
 
     /**
