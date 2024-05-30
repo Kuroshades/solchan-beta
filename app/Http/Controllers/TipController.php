@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Price;
 use App\Models\Tip;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class TipController extends Controller
@@ -15,13 +16,18 @@ class TipController extends Controller
     public function index()
     {
         // group tips by tipper_name, calculate total amount, add rank, and return the result sorted by descending amount
-        $tips = Tip::selectRaw('tipper_name, SUM(amount) as total_amount, ROW_NUMBER() OVER (ORDER BY SUM(amount) DESC) as rank')
-            ->groupBy('tipper_name')
-            ->orderBy('total_amount', 'desc')
+        $tips = Tip::selectRaw('tipper_name, SUM(amount) as total_amount, @rownum := @rownum + 1 AS rank')
+            ->fromSub(function ($query) {
+                $query->selectRaw('tipper_name, SUM(amount) as total_amount')
+                    ->from('tips')
+                    ->groupBy('tipper_name')
+                    ->orderByDesc('total_amount');
+            }, 'tips')
+            ->crossJoin(DB::raw('(SELECT @rownum := 0) r'))
             ->paginate(10);
-    
+
         $price = Price::orderBy('timestamp', 'desc')->first()->price;
-    
+
         return Inertia::render('Tips/Index', [
             'tips' => $tips,
             'price' => $price,
