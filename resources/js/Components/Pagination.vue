@@ -10,7 +10,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div v-if="links.length > 3">
+    <div class="flex justify-center my-1" v-if="links.length > 3">
         <div class="flex flex-wrap -mb-1">
             <template v-for="(link, key) in links" :key="key">
                 <div

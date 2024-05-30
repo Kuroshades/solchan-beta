@@ -17,6 +17,15 @@ const props = defineProps({
 onMounted(() => {
     console.log(props.tips);
 });
+
+const abbreviate_wallet = (wallet) => {
+    if (wallet.endsWith(".sol")) {
+        // first 4 letter ... last 4 letter
+        return wallet.slice(0, 4) + "..." + wallet.slice(-4);
+    } else {
+        return wallet;
+    }
+};
 </script>
 
 <template>
@@ -71,6 +80,20 @@ onMounted(() => {
                             {{ index + 1 }}
                         </td>
                         <td
+                            v-if="
+                                abbreviate_wallet(tip.tipper_name) ===
+                                tip.tipper_name
+                            "
+                            class="py-3 px-4 text-sm text-gray-600 dark:text-gray-300"
+                        >
+                            <a
+                                :href="`https://solscan.io/account/{tip.tipper_name}`"
+                            >
+                                {{ abbreviate_wallet(tip.tipper_name) }}
+                            </a>
+                        </td>
+                        <td
+                            v-else
                             class="py-3 px-4 text-sm text-gray-600 dark:text-gray-300"
                         >
                             {{ tip.tipper_name }}
