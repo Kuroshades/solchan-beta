@@ -10,7 +10,9 @@ class SolchanProfileController extends Controller
 {
     public function show(Request $request, string $name)
     {
-        $posts = Post::where('name', $name)->with(['tippedTips', 'tipperTips', 'pfp'])
+        $posts = Post::where('name', $name)
+            ->orderBy('timestamp', 'desc')
+            ->with(['tippedTips', 'tipperTips', 'pfp'])
             ->get();
 
         if ($posts->isEmpty()) {

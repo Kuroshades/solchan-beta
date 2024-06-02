@@ -45,7 +45,7 @@ const thumb_is_expanded = ref(false);
                 <img
                     v-if="post.pfp.pfp_link"
                     width="100px"
-                    height="auto"
+                    height="100px"
                     :src="post.pfp.pfp_link"
                     alt="PFP"
                 />
