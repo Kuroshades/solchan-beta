@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.spoiler {
+    @apply text-transparent;
+    text-shadow: 0 0 10px black;
+}
+
+.spoiler:hover {
+    @apply text-black;
+    text-shadow: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    .spoiler {
+        @apply text-transparent;
+        text-shadow: 0 0 10px white;
+    }
+
+    .spoiler:hover {
+        @apply text-white;
+        text-shadow: none;
+    }
+}

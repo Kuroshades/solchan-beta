@@ -4,13 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class SolchanProfileController extends Controller
 {
     public function show(Request $request, string $name)
     {
-        $posts = Post::where('name', $name)->get();
+        $posts = Post::where('name', $name)->with(['tippedTips', 'tipperTips', 'pfp'])
+            ->get();
 
-        dd($posts);
+        if ($posts->isEmpty()) {
+            abort(404);
+        }
+
+        return Inertia::render('SolchanProfile/Show', [
+            'name' => $name,
+            'posts' => $posts,
+        ]);
     }
 }
