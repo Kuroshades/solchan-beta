@@ -1,9 +1,7 @@
 <script setup>
 import { Head, Link } from "@inertiajs/vue3";
-import Pagination from "../../Components/Pagination.vue";
 import Post from "../../Components/Post.vue";
 import { onMounted } from "vue";
-import { ref } from "vue";
 
 const props = defineProps({
     posts: {
@@ -14,20 +12,20 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    tips_given: {
+        type: Number,
+        required: true,
+    },
+    tips_received: {
+        type: Number,
+        required: true,
+    },
 });
 
 onMounted(() => {
     console.log(props.posts);
 });
 
-const abbreviate_wallet = (wallet) => {
-    if (wallet.endsWith(".sol")) {
-        return wallet;
-    } else {
-        // first 4 letter ... last 4 letter
-        return wallet.slice(0, 4) + "..." + wallet.slice(-4);
-    }
-};
 </script>
 
 <template>
@@ -54,30 +52,12 @@ const abbreviate_wallet = (wallet) => {
                         class="text-center text- gray-600 dark:text-gray-400 font-bold"
                     >
                         <!-- Sum the array.tipper_tips[].amount -->
-                        {{
-                            props.posts.reduce((acc, post) => {
-                                return (
-                                    acc +
-                                    post.tipper_tips.reduce((acc, tip) => {
-                                        return acc + tip.amount;
-                                    }, 0)
-                                );
-                            }, 0)
-                        }}
+                        {{ tips_given }}
                     </p>
                     <p
                         class="text-center text- gray-600 dark:text-gray-400 font-bold"
                     >
-                        {{
-                            props.posts.reduce((acc, post) => {
-                                return (
-                                    acc +
-                                    post.tipped_tips.reduce((acc, tip) => {
-                                        return acc + tip.amount;
-                                    }, 0)
-                                );
-                            }, 0)
-                        }}
+                        {{ tips_received }}
                     </p>
                 </div>
             </div>
