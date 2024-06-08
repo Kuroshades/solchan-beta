@@ -6,7 +6,7 @@ import { abbreviate_wallet } from "../../functions";
 
 const props = defineProps({
     post: {
-        type: Array,
+        type: Object,
         required: true,
     },
 });

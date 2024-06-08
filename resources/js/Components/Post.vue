@@ -4,6 +4,8 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Link } from "@inertiajs/vue3";
 import { onMounted } from "vue";
+import { is_embed } from "@/functions";
+import Embed from "./Embed.vue";
 
 dayjs.extend(relativeTime);
 
@@ -21,7 +23,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="relative rounded bg-base-100 shadow-xl w-full">
+    <div class="relative rounded bg-base-100 shadow-xl w-full pb-4 lg:pb-0">
         <div v-if="post.tipper_tips.length > 0">
             <div
                 class="bg-yellow-700 rounded-t text-white flex gap-4 items-center px-6 py-1"
@@ -55,8 +57,12 @@ onMounted(() => {
                     v-if="!thumb_is_expanded"
                 />
                 <template v-else>
+                    <Embed
+                        v-if="is_embed(post.file_hex)"
+                        v-html="post.file"
+                    ></Embed>
                     <video
-                        v-if="
+                        v-else-if="
                             post.file.endsWith('.webm') ||
                             post.file.endsWith('.mp4')
                         "

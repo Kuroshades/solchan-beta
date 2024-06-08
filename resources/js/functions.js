@@ -7,4 +7,13 @@ const abbreviate_wallet = (wallet) => {
     }
 };
 
-export { abbreviate_wallet };
+const is_embed = (file_hex) => {
+    embeds = ["SoundClound", "Vimeo", "YouTube"];
+    if (embeds.includes(file_hex)) {
+        return true;
+    } else {
+        return false;
+    }
+};
+
+export { abbreviate_wallet, is_embed };
