@@ -8,7 +8,7 @@ const abbreviate_wallet = (wallet) => {
 };
 
 const is_embed = (file_hex) => {
-    embeds = ["SoundClound", "Vimeo", "YouTube"];
+    const embeds = ["SoundClound", "Vimeo", "YouTube"];
     if (embeds.includes(file_hex)) {
         return true;
     } else {
