@@ -3,6 +3,7 @@ import { ref } from "vue";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Link } from "@inertiajs/vue3";
+import { onMounted } from "vue";
 
 dayjs.extend(relativeTime);
 
@@ -14,6 +15,9 @@ const props = defineProps({
 });
 
 const thumb_is_expanded = ref(false);
+onMounted(() => {
+    console.log(props.post);
+});
 </script>
 
 <template>
