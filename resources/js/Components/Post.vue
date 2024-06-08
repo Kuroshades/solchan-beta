@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { Link } from "@inertiajs/vue3";
 
 dayjs.extend(relativeTime);
 
@@ -49,13 +50,31 @@ const thumb_is_expanded = ref(false);
                     :alt="post.file_original"
                     v-if="!thumb_is_expanded"
                 />
-                <img
-                    v-else
-                    :src="`${$page.props.app.alpha_url}/src/${post.file}`"
-                    :width="post.file_width"
-                    :height="post.file_height"
-                    :alt="post.file_original"
-                />
+                <template v-else>
+                    <video
+                        v-if="
+                            post.file.endswith('.webm') ||
+                            post.file.endswith('.mp4')
+                        "
+                        :width="post.image_width"
+                        :height="post.image_height"
+                        class="static inline"
+                        controls
+                        autoplay
+                        loop
+                    >
+                        <source
+                            :src="`${$page.props.app.alpha_url}/src/${post.file}`"
+                        />
+                    </video>
+                    <img
+                        v-else
+                        :src="`${$page.props.app.alpha_url}/src/${post.file}`"
+                        :width="post.image_width"
+                        :height="post.image_height"
+                        :alt="post.file_original"
+                    />
+                </template>
             </figure>
             <div class="card-body">
                 <div
@@ -66,7 +85,9 @@ const thumb_is_expanded = ref(false);
                     }"
                 >
                     <p v-if="post.parent == 0">OP</p>
-                    <p>#{{ post.id }}</p>
+                    <Link :href="route('posts.show', post.id)"
+                        ><p>#{{ post.id }}</p></Link
+                    >
                 </div>
                 <div class="flex gap-2">
                     <img

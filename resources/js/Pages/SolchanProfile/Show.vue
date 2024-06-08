@@ -2,6 +2,7 @@
 import { Head, Link } from "@inertiajs/vue3";
 import Post from "../../Components/Post.vue";
 import { onMounted } from "vue";
+import { abbreviate_wallet } from "../../functions";
 
 const props = defineProps({
     posts: {
@@ -25,7 +26,6 @@ const props = defineProps({
 onMounted(() => {
     console.log(props.posts);
 });
-
 </script>
 
 <template>
@@ -39,7 +39,7 @@ onMounted(() => {
                 <h1
                     class="text-3xl font-bold text-center text-gray-900 dark:text-gray-100"
                 >
-                    {{ name }}'s Profile
+                    {{ abbreviate_wallet(name) }}'s Profile
                 </h1>
                 <div class="grid grid-cols-2">
                     <p class="text-center text-gray-600 dark:text-gray-400">

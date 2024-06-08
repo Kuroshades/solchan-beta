@@ -3,6 +3,7 @@ import { Head, Link } from "@inertiajs/vue3";
 import Pagination from "../../Components/Pagination.vue";
 import { onMounted } from "vue";
 import { ref } from "vue";
+import { abbreviate_wallet } from "../../functions";
 
 const props = defineProps({
     tips: {
@@ -20,15 +21,6 @@ const ref_price = ref(parseFloat(props.price));
 onMounted(() => {
     console.log(props.tips);
 });
-
-const abbreviate_wallet = (wallet) => {
-    if (wallet.endsWith(".sol")) {
-        return wallet;
-    } else {
-        // first 4 letter ... last 4 letter
-        return wallet.slice(0, 4) + "..." + wallet.slice(-4);
-    }
-};
 </script>
 
 <template>

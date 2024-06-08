@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SolchanProfileController;
 use App\Http\Controllers\TipController;
@@ -39,5 +40,6 @@ use Inertia\Inertia;
 
 Route::resource('/tips', TipController::class)->only(['index']);
 Route::get('/profile/{name}', [SolchanProfileController::class, 'show'])->name('profile.show');
+Route::resource('/posts', PostController::class)->only(['show']);
 
 // require __DIR__ . '/auth.php';
