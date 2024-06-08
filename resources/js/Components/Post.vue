@@ -57,8 +57,8 @@ onMounted(() => {
                 <template v-else>
                     <video
                         v-if="
-                            post.file.endswith('.webm') ||
-                            post.file.endswith('.mp4')
+                            post.file.endsWith('.webm') ||
+                            post.file.endsWith('.mp4')
                         "
                         :width="post.image_width"
                         :height="post.image_height"
