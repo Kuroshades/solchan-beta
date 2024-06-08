@@ -6,4 +6,6 @@ const props = defineProps({
     },
 });
 </script>
-<template v-html="html"></template>
+<template>
+    <div v-html="html"></div>
+</template>
