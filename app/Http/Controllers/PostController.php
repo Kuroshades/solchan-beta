@@ -13,7 +13,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        // dd('test');
+        return Inertia::render('Post/Catalog');
     }
 
     /**
@@ -21,7 +22,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $posts = Post::where('parent', 0)->withCount('replies')->paginate(7); // Adjust the number 10 to the desired posts per page
+        dd($posts);
+        // return Inertia::render('Post/Create', ['posts' => $posts]);
     }
 
     /**
