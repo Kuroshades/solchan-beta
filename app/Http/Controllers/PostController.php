@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Post;
+use App\Models\Price;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -22,9 +24,26 @@ class PostController extends Controller
      */
     public function create()
     {
-        $posts = Post::where('parent', 0)->withCount('replies')->paginate(7); // Adjust the number 10 to the desired posts per page
-        dd($posts);
-        // return Inertia::render('Post/Create', ['posts' => $posts]);
+        $price = Price::orderBy('timestamp', 'desc')->first()->price;
+        $posts = Post::where('parent', 0)
+            ->withCount(['tippedTips as total_tipped' => function ($query) {
+                $query->select(DB::raw('coalesce(sum(amount), 0)'));
+            }])
+            ->withCount('replies')
+            ->paginate(7);
+
+        $posts->getCollection()->transform(function ($post) use ($price) {
+            $post->total_tipped_USD = round($post->total_tipped * $price, 1);
+            $post->thumb_image_link = env('ALPHA_URL') . '/thumb/' . $post->thumb;
+            $post->original_image_link = env('ALPHA_URL') . '/src/' . $post->file;
+            $post->nameblock = str_replace('<span class="postername">', '<span class="postername font-bold  underline style="color: #059669 !important;">', $post->nameblock);
+            // $post->nameblock = preg_replace('/(<span class="postername;">)(.*?)(<\/span>)/', '$1$3', $post->nameblock, 1);
+            return $post;
+        });
+
+
+        // dd($posts);
+        return Inertia::render('Post/Create', ['posts' => $posts]);
     }
 
     /**
