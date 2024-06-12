@@ -101,10 +101,16 @@ onMounted(() => {
                 </div>
                 <div class="flex gap-2">
                     <img
-                        v-if="post.pfp.pfp_link"
+                        v-if="post.pfp && post.pfp.path != null"
                         width="100px"
-                        height="100px"
-                        class="!h-[100px]"
+                        height="auto"
+                        :src="`${$page.props.app.alpha_url}/${post.pfp.path}`"
+                        alt="PFP"
+                    />
+                    <img
+                        v-else-if="post.pfp && post.pfp.pfp_link != ''"
+                        width="100px"
+                        height="auto"
                         :src="post.pfp.pfp_link"
                         alt="PFP"
                     />

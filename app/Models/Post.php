@@ -37,11 +37,6 @@ class Post extends Model
         'locked',
     ];
 
-    public function latestReply()
-    {
-        return $this->hasOne(Post::class, 'parent', 'id')->orderBy('id', 'desc');
-    }
-
     public function pfp()
     {
         return $this->hasOne(Pfp::class, 'id');
