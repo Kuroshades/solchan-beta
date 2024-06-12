@@ -19,7 +19,7 @@ const props = defineProps({
 });
 
 console.log(props.posts);
-
+console.log(parseInt(props.posts.data[1].total_tipped) != 0.0)
 </script>
 <template>
   <div class="container mx-auto grid gap-4 min-h-screen" :style="{ backgroundColor: '#FFFFEE' }">
@@ -137,13 +137,13 @@ console.log(props.posts);
     </div>
 
     <!-- Fourth Row: Blank -->
-    <div class="p-4" v-for="post in posts.data" :key="post.id">
-      <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
+    <div class="mx-3 p-4 bg-white shadow-lg rounded-lg overflow-auto" v-for="post in posts.data" :key="post.id">
+      <div v-if="parseInt(post.total_tipped) > 0" class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
         <p>User was tipped {{ post.total_tipped }} Solchan (${{ post.total_tipped_USD }}) for this post.</p>
       </div>
-      <div class="flex justify-between items-center mb-4">
-        <a href="#" class="text-blue-500 hover:underline">File: 171228907504.jpg—(1.04MB, 3021x2429, IMG_9778.jpeg)</a>
-        <div class="flex space-x-2">
+      <div class="flex justify-end items-center mb-4">
+        <!-- <a href="#" class="text-blue-500 hover:underline">File: 171228907504.jpg—(1.04MB, 3021x2429, IMG_9778.jpeg)</a> -->
+        <div class="flex space-x-2 ">
           <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-1 px-2 rounded">
             Tip OP
           </button>
@@ -152,23 +152,62 @@ console.log(props.posts);
           </button>
         </div>
       </div>
-      <div class="flex">
-        <img :src="post.thumb_image_link" alt="User image" class="w-1/6 h-auto mr-4">
+      <div class="flex w-full">
+        <img v-if="post.thumb_image_link" :src="post.thumb_image_link" alt="User image" class="w-1/6 h-auto mr-4">
         <div>
           <p class="text-red-600 font-bold text-xl">{{ post.subject }}</p>
           <div v-html="post.nameblock" class="text-red-900"></div>
           <p  class="mb-2 text-red-900 "> No.{{ post.id }}</p>
-          <p class="text-red-900 mb-2">{{ post.message }}</p>
+          <div v-html="post.message" class="text-red-900 mb-2"></div>
+          <!-- <p class="text-red-900 mb-2">{{ post.message }}</p> -->
         </div>
       </div>
       <p class="text-sm mt-4">Click Reply to view {{ post.replies_count }} more posts.</p>
+      
+      <div class="mt-3 p-4 bg-red-100 shadow-lg rounded-sm" v-if="post.latest_reply">
+        <!-- <div class="flex justify-between items-center mb-4">
+          <a href="#" class="text-blue-500 hover:underline">File: 171228907504.jpg—(1.04MB, 3021x2429, IMG_9778.jpeg)</a>
+        </div> -->
+        <div class="flex">
+          <img v-if="post.latest_reply.thumb_image_link" :src="post.latest_reply.thumb_image_link" alt="User image" class="w-1/6 h-auto mr-4">
+          <div>
+            <p class="text-red-600 font-bold text-xl">{{ post.latest_reply.subject }}</p>
+            <div v-html="post.nameblock" class="text-red-900"></div>
+            <p  class="mb-2 text-red-900 "> No.{{ post.latest_reply.id }}</p>
+            <div v-html="post.latest_reply.message" class="text-red-900"></div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- Pagination -->
     <div class="flex justify-center space-x-2 mt-4 mb-6">
-      <button class="px-3 py-1 rounded border bg-white text-blue-500 hover:bg-blue-500 hover:text-white">1</button>
-      <button class="px-3 py-1 rounded border bg-white text-blue-500 hover:bg-blue-500 hover:text-white">2</button>
-      <button class="px-3 py-1 rounded border bg-white text-blue-500 hover:bg-blue-500 hover:text-white">3</button>
+      <a :href="'/posts/create?page=1'">
+        <button class="px-3 py-1 rounded border bg-white text-blue-500 hover:bg-blue-500 hover:text-white"> << </button>
+      </a>
+
+      <a v-if="posts.current_page - 2 > 0" :href="'/posts/create?page=' + (posts.current_page - 2)">
+        <button v-if="posts.current_page - 2 > 0" class="px-3 py-1 rounded border bg-white text-blue-500 hover:bg-blue-500 hover:text-white">{{ posts.current_page - 2 }}</button>
+      </a>
+
+      <a v-if="posts.current_page - 1 > 0" :href="'/posts/create?page=' + (posts.current_page - 1)">
+      <button v-if="posts.current_page - 1 > 0" class="px-3 py-1 rounded border bg-white text-blue-500 hover:bg-blue-500 hover:text-white">{{ posts.current_page - 1 }}</button>
+      </a>
+      
+      <button class="px-3 py-1 rounded border bg-blue-500 text-white"> {{ posts.current_page }} </button>
+
+      <a  v-if="posts.current_page + 1 <= (posts.last_page)" :href="'/posts/create?page=' + (posts.current_page + 1)">
+      <button v-if="posts.current_page + 1 <= (posts.last_page)" class="px-3 py-1 rounded border bg-white text-blue-500 hover:bg-blue-500 hover:text-white"> {{ posts.current_page + 1}} </button>
+      </a>
+      
+      <a v-if="posts.current_page + 2 <= (posts.last_page)" :href="'/posts/create?page=' + (posts.current_page + 2)">
+       <button v-if="posts.current_page + 2 <=  (posts.last_page)" class="px-3 py-1 rounded border bg-white text-blue-500 hover:bg-blue-500 hover:text-white"> {{ posts.current_page + 2}} </button>
+      </a>
+
+      <a :href="'/posts/create?page=' + posts.last_page">
+        <button class="px-3 py-1 rounded border bg-white text-blue-500 hover:b</a>g-blue-500 hover:text-white"> >> </button>
+      </a>
       <!-- Add more pagination buttons as needed -->
     </div>
 

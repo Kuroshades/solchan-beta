@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Price;
 
 class Post extends Model
 {
@@ -35,6 +36,11 @@ class Post extends Model
         'moderated',
         'locked',
     ];
+
+    public function latestReply()
+    {
+        return $this->hasOne(Post::class, 'parent', 'id')->orderBy('id', 'desc');
+    }
 
     public function pfp()
     {
