@@ -181,32 +181,7 @@ const props = defineProps({
 
     <!-- Pagination -->
     <div class="flex justify-center space-x-2 mt-4 mb-6">
-      <a :href="'/posts/create?page=1'">
-        <button class="px-3 py-1 rounded border bg-white text-blue-500 hover:bg-blue-500 hover:text-white"> << </button>
-      </a>
-
-      <a v-if="posts.current_page - 2 > 0" :href="'/posts/create?page=' + (posts.current_page - 2)">
-        <button v-if="posts.current_page - 2 > 0" class="px-3 py-1 rounded border bg-white text-blue-500 hover:bg-blue-500 hover:text-white">{{ posts.current_page - 2 }}</button>
-      </a>
-
-      <a v-if="posts.current_page - 1 > 0" :href="'/posts/create?page=' + (posts.current_page - 1)">
-      <button v-if="posts.current_page - 1 > 0" class="px-3 py-1 rounded border bg-white text-blue-500 hover:bg-blue-500 hover:text-white">{{ posts.current_page - 1 }}</button>
-      </a>
-      
-      <button class="px-3 py-1 rounded border bg-blue-500 text-white"> {{ posts.current_page }} </button>
-
-      <a  v-if="posts.current_page + 1 <= (posts.last_page)" :href="'/posts/create?page=' + (posts.current_page + 1)">
-      <button v-if="posts.current_page + 1 <= (posts.last_page)" class="px-3 py-1 rounded border bg-white text-blue-500 hover:bg-blue-500 hover:text-white"> {{ posts.current_page + 1}} </button>
-      </a>
-      
-      <a v-if="posts.current_page + 2 <= (posts.last_page)" :href="'/posts/create?page=' + (posts.current_page + 2)">
-       <button v-if="posts.current_page + 2 <=  (posts.last_page)" class="px-3 py-1 rounded border bg-white text-blue-500 hover:bg-blue-500 hover:text-white"> {{ posts.current_page + 2}} </button>
-      </a>
-
-      <a :href="'/posts/create?page=' + posts.last_page">
-        <button class="px-3 py-1 rounded border bg-white text-blue-500 hover:b</a>g-blue-500 hover:text-white"> >> </button>
-      </a>
-      <!-- Add more pagination buttons as needed -->
+      <Pagination :links="posts.links" />
     </div>
 
   </div>
