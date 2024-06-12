@@ -18,8 +18,6 @@ const props = defineProps({
   posts: Object,
 });
 
-console.log(props.posts);
-console.log(parseInt(props.posts.data[1].total_tipped) != 0.0)
 </script>
 <template>
   <div class="container mx-auto grid gap-4 min-h-screen" :style="{ backgroundColor: '#FFFFEE' }">
