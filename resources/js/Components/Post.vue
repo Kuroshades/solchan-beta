@@ -24,7 +24,13 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="relative rounded bg-base-100 shadow-xl w-full pb-4 lg:pb-0">
+    <div
+        class="grid rounded shadow-xl w-full"
+        :class="{
+            'bg-base-300': post.parent == 0,
+            'bg-base-200': post.parent != 0,
+        }"
+    >
         <div v-if="post.tipper_tips.length > 0">
             <div
                 class="bg-yellow-700 rounded-t text-white flex gap-4 items-center px-6 py-1"
@@ -66,9 +72,9 @@ onMounted(() => {
                 </p>
             </div>
         </div>
-        <div class="flex lg:flex-row flex-col">
+        <div>
             <figure
-                class="cursor-pointer"
+                class="cursor-pointer float-left mr-4"
                 @click="thumb_is_expanded = !thumb_is_expanded"
             >
                 <img
@@ -108,31 +114,22 @@ onMounted(() => {
                     />
                 </template>
             </figure>
-            <div class="card-body">
+            <div>
                 <div
-                    class="absolute text-2xl right-4 flex gap-2"
+                    class="flex gap-2 pt-1"
                     :class="{
-                        'lg:top-4 bottom-4': post.tipper_tips.length == 0,
-                        'lg:top-12 bottom-4': post.tipper_tips.length > 0,
+                        'ml-4': !post.file,
                     }"
                 >
-                    <p v-if="post.parent == 0">OP</p>
-                    <Link :href="route('posts.show', post.id)"
-                        ><p>#{{ post.id }}</p></Link
-                    >
-                </div>
-                <div class="flex gap-2">
                     <img
                         v-if="post.pfp && post.pfp.path != null"
-                        width="100px"
-                        height="auto"
+                        class="w-16 lg:w-32"
                         :src="`${$page.props.app.alpha_url}/${post.pfp.path}`"
                         alt="PFP"
                     />
                     <img
                         v-else-if="post.pfp && post.pfp.pfp_link != ''"
-                        width="100px"
-                        height="auto"
+                        class="w-16 lg:w-32"
                         :src="post.pfp.pfp_link"
                         alt="PFP"
                     />
@@ -147,10 +144,22 @@ onMounted(() => {
                         <p :title="dayjs(post.timestamp * 1000)">
                             {{ dayjs(post.timestamp * 1000).fromNow() }}
                         </p>
-                        <hr class="dark:border-white/50 border-black/50" />
-                        <p v-html="post.message"></p>
+                        <hr class="border-accent/50" />
+                    </div>
+                    <div
+                        class="text-2xl right-4 flex gap-2 ml-auto mr-4 pt-2"
+                        :class="{
+                            'lg:top-4 bottom-4': post.tipper_tips.length == 0,
+                            'lg:top-12 bottom-4': post.tipper_tips.length > 0,
+                        }"
+                    >
+                        <p v-if="post.parent == 0">OP</p>
+                        <Link :href="route('posts.show', post.id)"
+                            ><p>#{{ post.id }}</p></Link
+                        >
                     </div>
                 </div>
+                <p class="mx-4 mb-2" v-html="post.message"></p>
                 <slot />
             </div>
         </div>

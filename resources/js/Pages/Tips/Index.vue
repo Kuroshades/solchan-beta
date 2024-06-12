@@ -29,33 +29,29 @@ onMounted(() => {
 
     <SolchanLayout>
         <div class="flex flex-col items-center space-y-4">
-            <h1
-                class="text-3xl font-bold text-center text-gray-900 dark:text-gray-100"
-            >
+            <h1 class="text-3xl font-bold text-center text-primary">
                 Tip Leaderboards
             </h1>
-            <p class="text-center text-gray-600 dark:text-gray-400">
+            <p class="text-center text-secondary">
                 See who's tipping the most on Solchan.
             </p>
         </div>
         <div class="overflow-x-auto max-w-7xl mx-auto lg:p-8">
-            <table
-                class="w-full mt-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg"
-            >
+            <table class="w-full mt-8 bg-secondary rounded-lg shadow-lg">
                 <thead>
                     <tr>
                         <th
-                            class="text-center py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase"
+                            class="text-center py-3 px-4 bg-primary text-sm font-semibold text-primary-content uppercase"
                         >
                             Rank
                         </th>
                         <th
-                            class="text-center py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase"
+                            class="text-center py-3 px-4 bg-primary text-sm font-semibold text-primary-content uppercase"
                         >
                             Name
                         </th>
                         <th
-                            class="text-center py-3 px-4 bg-gray-100 dark:bg-gray-700 text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase"
+                            class="text-center py-3 px-4 bg-primary text-sm font-semibold text-primary-content uppercase"
                         >
                             Total Tips
                         </th>
@@ -65,11 +61,9 @@ onMounted(() => {
                     <tr
                         v-for="(tip, index) in tips.data"
                         :key="tip.id"
-                        class="border-b border-gray-200 dark:border-gray-700"
+                        class="border-b border-accent-content"
                     >
-                        <td
-                            class="py-3 px-4 text-sm text-gray-600 dark:text-gray-300"
-                        >
+                        <td class="py-3 px-4 text-sm text-secondary-content">
                             {{ tips.from + index }}
                         </td>
                         <td
@@ -77,13 +71,13 @@ onMounted(() => {
                                 abbreviate_wallet(tip.tipper_name) ===
                                 tip.tipper_name
                             "
-                            class="py-3 px-4 text-sm text-gray-600 dark:text-gray-300"
+                            class="py-3 px-4 text-sm text-secondary-content"
                         >
                             {{ tip.tipper_name }}
                         </td>
                         <td
                             v-else
-                            class="py-3 px-4 text-sm text-gray-600 dark:text-gray-300"
+                            class="py-3 px-4 text-sm text-secondary-content"
                         >
                             <a
                                 :title="tip.tipper_name"
@@ -93,9 +87,7 @@ onMounted(() => {
                                 {{ abbreviate_wallet(tip.tipper_name) }}
                             </a>
                         </td>
-                        <td
-                            class="py-3 px-4 text-sm text-gray-600 dark:text-gray-300"
-                        >
+                        <td class="py-3 px-4 text-sm text-secondary-content">
                             {{ Intl.NumberFormat().format(tip.total_amount) }}
                             (${{ (tip.total_amount * ref_price).toFixed(2) }})
                         </td>

@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "@inertiajs/progress": "^0.2.7",
-        "dayjs": "^1.11.11"
+        "dayjs": "^1.11.11",
+        "theme-change": "^2.5.0"
     }
 }

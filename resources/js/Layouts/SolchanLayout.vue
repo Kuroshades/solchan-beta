@@ -1,12 +1,56 @@
 <script setup>
 import Logo from "../../images/logo.svg";
+import { onMounted } from "vue";
+import { themeChange } from "theme-change";
+const themes = [
+    "cupcake",
+    "bumblebee",
+    "emerald",
+    "corporate",
+    "synthwave",
+    "retro",
+    "cyberpunk",
+    "valentine",
+    "halloween",
+    "garden",
+    "forest",
+    "aqua",
+    "lofi",
+    "pastel",
+    "fantasy",
+    "wireframe",
+    "black",
+    "luxury",
+    "dracula",
+    "cmyk",
+    "autumn",
+    "business",
+    "acid",
+    "lemonade",
+    "night",
+    "coffee",
+    "winter",
+    "dim",
+    "nord",
+    "sunset",
+];
+onMounted(() => {
+    themeChange(false);
+});
 </script>
 
 <template>
     <div
-        class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white"
+        data-theme
+        class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-base-100 dark:bg-dots-lighter selection:bg-accent selection:textarea-secondary"
     >
-        <div class="max-w-7xl mx-auto p-6 lg:p-8">
+        <select class="absolute top-2 right-2" data-choose-theme>
+            <option value="">Default</option>
+            <option v-for="theme in themes" :value="theme" :key="theme">
+                {{ theme }}
+            </option>
+        </select>
+        <div class="max-w-7xl mx-auto p-0 lg:p-8 w-full">
             <figure class="flex justify-center items-center">
                 <img
                     :src="Logo"
