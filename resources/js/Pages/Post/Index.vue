@@ -18,6 +18,7 @@ onMounted(() => {
 });
 </script>
 <template>
+    <Head title="Index" />
     <SolchanLayout>
         <section class="w-full max-w-7xl flex flex-col gap-4">
             <IndexPost v-for="post in posts.data" :key="post.id" :post="post" />

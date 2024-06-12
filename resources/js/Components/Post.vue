@@ -6,6 +6,7 @@ import { Link } from "@inertiajs/vue3";
 import { onMounted } from "vue";
 import { is_embed } from "@/functions";
 import Embed from "./Embed.vue";
+import { abbreviate_wallet } from "../functions";
 
 dayjs.extend(relativeTime);
 
@@ -44,9 +45,30 @@ onMounted(() => {
                 </p>
             </div>
         </div>
+        <div v-if="post.tipped_tips.length > 0">
+            <div
+                class="bg-yellow-700 rounded-t text-white flex gap-4 items-center px-6 py-1"
+            >
+                <img
+                    src="https://solchan.org/tip-coin-pixel.png"
+                    width="30px"
+                    height="30px"
+                />
+                <p>
+                    User was tipped
+                    {{
+                        post.tipped_tips.reduce(
+                            (acc, tip) => acc + tip.amount,
+                            0
+                        )
+                    }}
+                    Solchan for this post
+                </p>
+            </div>
+        </div>
         <div class="flex lg:flex-row flex-col">
             <figure
-                class="cursor-pointer self-center"
+                class="cursor-pointer"
                 @click="thumb_is_expanded = !thumb_is_expanded"
             >
                 <img
@@ -116,7 +138,12 @@ onMounted(() => {
                     />
                     <div class="flex flex-col h-fit">
                         <h2 class="card-title">{{ post.subject }}</h2>
-                        <p class="font-bold">{{ post.name }}</p>
+                        <p v-if="post.name == ''" class="font-bold">
+                            Anonymous
+                        </p>
+                        <p v-else :title="post.name" class="font-bold">
+                            {{ abbreviate_wallet(post.name) }}
+                        </p>
                         <p :title="dayjs(post.timestamp * 1000)">
                             {{ dayjs(post.timestamp * 1000).fromNow() }}
                         </p>
@@ -124,6 +151,7 @@ onMounted(() => {
                         <p v-html="post.message"></p>
                     </div>
                 </div>
+                <slot />
             </div>
         </div>
     </div>
