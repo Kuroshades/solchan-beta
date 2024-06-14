@@ -3,6 +3,7 @@ import { Head, Link } from "@inertiajs/vue3";
 import Post from "../../Components/Post.vue";
 import { onMounted } from "vue";
 import { abbreviate_wallet } from "../../functions";
+import SolchanLayout from "@/Layouts/SolchanLayout.vue";
 
 const props = defineProps({
     posts: {
@@ -31,43 +32,39 @@ onMounted(() => {
 <template>
     <Head :title="`${name}'s Profile`" />
 
-    <div
-        class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white"
-    >
-        <div class="max-w-7xl mx-auto p-6 lg:p-8">
-            <div class="flex flex-col items-center space-y-4">
-                <h1
-                    class="text-3xl font-bold text-center text-gray-900 dark:text-gray-100"
-                >
-                    {{ abbreviate_wallet(name) }}'s Profile
-                </h1>
-                <div class="grid grid-cols-2">
-                    <p class="text-center text-gray-600 dark:text-gray-400">
-                        TIPS GIVEN
-                    </p>
-                    <p class="text-center text- gray-600 dark:text-gray-400">
-                        TIPS RECEIVED
-                    </p>
-                    <p
-                        class="text-center text- gray-600 dark:text-gray-400 font-bold"
-                    >
-                        <!-- Sum the array.tipper_tips[].amount -->
-                        {{ tips_given }}
-                    </p>
-                    <p
-                        class="text-center text- gray-600 dark:text-gray-400 font-bold"
-                    >
-                        {{ tips_received }}
-                    </p>
-                </div>
-            </div>
-            <div
-                class="flex flex-wrap gap-4 justify-center overflow-x-auto max-w-7xl mx-auto lg:p-8"
+    <SolchanLayout>
+        <div class="flex flex-col items-center space-y-4">
+            <h1
+                class="text-3xl font-bold text-center text-gray-900 dark:text-gray-100"
             >
-                <Post v-for="post in props.posts" :post="post" :key="post.id" />
+                {{ abbreviate_wallet(name) }}'s Profile
+            </h1>
+            <div class="grid grid-cols-2">
+                <p class="text-center text-gray-600 dark:text-gray-400">
+                    TIPS GIVEN
+                </p>
+                <p class="text-center text- gray-600 dark:text-gray-400">
+                    TIPS RECEIVED
+                </p>
+                <p
+                    class="text-center text- gray-600 dark:text-gray-400 font-bold"
+                >
+                    <!-- Sum the array.tipper_tips[].amount -->
+                    {{ tips_given }}
+                </p>
+                <p
+                    class="text-center text- gray-600 dark:text-gray-400 font-bold"
+                >
+                    {{ tips_received }}
+                </p>
             </div>
         </div>
-    </div>
+        <div
+            class="flex flex-wrap gap-4 justify-center overflow-x-auto max-w-7xl mx-auto lg:p-8"
+        >
+            <Post v-for="post in props.posts" :post="post" :key="post.id" />
+        </div>
+    </SolchanLayout>
 </template>
 
 <style>

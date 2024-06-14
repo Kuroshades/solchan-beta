@@ -12,6 +12,7 @@ const props = defineProps({
         <Post :post="post">
             <div class="p-4 space-y-4">
                 <Post
+                    :reply="true"
                     v-for="post in post.replies.sort((a, b) => a.id - b.id)"
                     :key="post.id"
                     :post="post"

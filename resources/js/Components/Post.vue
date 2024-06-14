@@ -15,6 +15,10 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    reply: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const thumb_is_expanded = ref(false);
@@ -25,7 +29,7 @@ onMounted(() => {
 
 <template>
     <div
-        class="grid rounded shadow-xl w-full"
+        class="shadow w-full grid card"
         :class="{
             'bg-base-300': post.parent == 0,
             'bg-base-200': post.parent != 0,
@@ -138,9 +142,11 @@ onMounted(() => {
                         <p v-if="post.name == ''" class="font-bold">
                             Anonymous
                         </p>
-                        <p v-else :title="post.name" class="font-bold">
-                            {{ abbreviate_wallet(post.name) }}
-                        </p>
+                        <Link v-else :href="route('profiles.show', post.name)">
+                            <p :title="post.name" class="font-bold">
+                                {{ abbreviate_wallet(post.name) }}
+                            </p>
+                        </Link>
                         <p :title="dayjs(post.timestamp * 1000)">
                             {{ dayjs(post.timestamp * 1000).fromNow() }}
                         </p>

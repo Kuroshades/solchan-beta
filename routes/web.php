@@ -39,7 +39,7 @@ use Inertia\Inertia;
 // });
 
 Route::resource('/tips', TipController::class)->only(['index']);
-Route::get('/profile/{name}', [SolchanProfileController::class, 'show'])->name('profile.show');
+Route::get('/profile/{name}', [SolchanProfileController::class, 'show'])->name('profiles.show');
 Route::resource('/posts', PostController::class)->only(['index', 'create', 'show']);
 
 // require __DIR__ . '/auth.php';

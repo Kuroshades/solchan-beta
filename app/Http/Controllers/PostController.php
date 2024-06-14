@@ -25,7 +25,7 @@ class PostController extends Controller
                 ->orderBy('id', 'desc')->limit(3)->get();
         });
 
-        return Inertia::render('Post/Index', ['posts' => $posts]);
+        return Inertia::render('Posts/Index', ['posts' => $posts]);
     }
 
     /**
@@ -49,9 +49,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return Inertia::render('Post/Show', [
-            'post' => $post->load(['replies', 'pfp', 'tippedTips', 'tipperTips']),
-        ]);
+        $post->load('pfp', 'tippedTips', 'tipperTips', 'replies.pfp', 'replies.tippedTips', 'replies.tipperTips');
+
+        return Inertia::render('Posts/Show', ['post' => $post]);
     }
 
     /**
