@@ -2,7 +2,7 @@
 
 import { Head, Link } from "@inertiajs/vue3";
 import { onMounted } from "vue";
-import Pagination from "../../Components/Pagination.vue";
+// import Pagination from "../../Components/Pagination.vue";
 import { ref } from 'vue';
 
 const form = ref({
