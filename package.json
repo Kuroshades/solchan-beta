@@ -21,7 +21,12 @@
     },
     "dependencies": {
         "@inertiajs/progress": "^0.2.7",
+        "@solana/wallet-adapter-wallets": "^0.19.32",
+        "@solana/web3.js": "^1.93.0",
+        "bs58": "^5.0.0",
         "dayjs": "^1.11.11",
-        "theme-change": "^2.5.0"
+        "solana-wallets-vue": "^0.6.1",
+        "theme-change": "^2.5.0",
+        "tweetnacl": "^1.0.3"
     }
 }

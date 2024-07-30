@@ -35,7 +35,7 @@ onMounted(() => {
     <SolchanLayout>
         <div class="flex flex-col items-center space-y-4">
             <h1
-                class="text-3xl font-bold text-center text-gray-900 dark:text-gray-100"
+                class="text-3xl font-bold text-center"
             >
                 {{ abbreviate_wallet(name) }}'s Profile
             </h1>
